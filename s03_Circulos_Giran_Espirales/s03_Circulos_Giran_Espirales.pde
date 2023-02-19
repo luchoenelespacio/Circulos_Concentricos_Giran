@@ -1,0 +1,106 @@
+import java.util.Random;
+
+Circulos cir;
+CirculosConcent miCirculoOrigen, miCirculoOrigenlinea2;
+int NUM_CIRCULOS_INTERIORES=0;
+int NUM_CIRCULOS_CONCENT=7;
+float INCREMENTO_AN=0.01;
+float centroX=width/2;
+float centroY=height/2;
+
+float RADIO_ACUMULADO=0;
+float VELOCIDAD=random(0,0.5);
+
+
+ArrayList<CirculosConcent> listaC = new ArrayList<CirculosConcent>();
+
+
+void setup() {
+  
+    float radioOriginal=100;
+    frameRate(30);
+    size(1920, 1080);
+    centroX=width/2;
+    centroY=height/2;
+    background(0);
+    stroke(250);
+    //cir=new Circulos(width/2, height/2, 100);
+    miCirculoOrigen=new CirculosConcent(new Circulos(centroX, centroY, radioOriginal,0),NUM_CIRCULOS_INTERIORES);
+    listaC.add(miCirculoOrigen);
+    RADIO_ACUMULADO+=radioOriginal;
+    
+    for(int i=0;i<NUM_CIRCULOS_CONCENT;i++){
+       float radioAleatorio=random(radioOriginal/2,radioOriginal);
+      
+       miCirculoOrigenlinea2=new CirculosConcent(new Circulos(RADIO_ACUMULADO+radioAleatorio, 0.0, radioAleatorio,radians((VELOCIDAD/(VELOCIDAD+i)))),NUM_CIRCULOS_INTERIORES);
+       listaC.add(miCirculoOrigenlinea2);
+        RADIO_ACUMULADO+=radioAleatorio*2;
+        // println("Radio_Acumulado:"+RADIO_ACUMULADO);
+        
+    }
+    
+    
+}
+
+void draw() {
+    // cir.display();
+    // background(0);
+    // noLoop();
+    
+    //delay(100);
+
+
+
+    
+        background(0);
+        //pushMatrix();
+        //noFill();
+        //ellipseMode(CENTER);
+        //translate(miCirculoOrigen.origen.posX, miCirculoOrigen.origen.posY);
+        
+        //ellipse(0,0,miCirculoOrigen.origen.diametro,miCirculoOrigen.origen.diametro);
+        //for (Circulos o : miCirculoOrigen.listaCirculos) { 
+        //    rotate(o.angulo);
+        //    ellipse(o.posX, o.posY, o.diametro, o.diametro);
+        //    o.angulo+=INCREMENTO_AN;
+        //    // println(o.nom,o.angulo);
+        //}
+        //popMatrix();
+
+        pushMatrix();
+        noFill();
+        ellipseMode(CENTER);
+        translate(listaC.get(0).origen.posX, listaC.get(0).origen.posY);
+        //println(listaC.get(0).origen.posX, listaC.get(0).origen.posY);
+        ellipse(0,0,listaC.get(0).origen.diametro,listaC.get(0).origen.diametro);
+      
+        
+        for(int i=1;i<listaC.size();i++){
+            rotate(listaC.get(i).origen.angulo);
+            
+            ellipse(listaC.get(i).origen.posX,listaC.get(i).origen.posY,listaC.get(i).origen.diametro,listaC.get(i).origen.diametro);
+            
+            //ellipse(c.origen.posX, c.origen.posY, c.origen.diametro, c.origen.diametro);
+           println(listaC.get(i).origen.posX, listaC.get(i).origen.posY);
+            listaC.get(i).origen.angulo+=listaC.get(i).origen.vel;
+            // listaC.get(i).origen.angulo+=INCREMENTO_AN;
+            
+        }
+        
+         popMatrix();   
+
+        //pushMatrix();
+        //ellipseMode(CENTER);
+        //translate(miCirculoOrigenlinea2.origen.posX, miCirculoOrigenlinea2.origen.posY);
+        ////ellipse(miCirculoOrigenlinea2.origen.posX,miCirculoOrigenlinea2.origen.posY,miCirculoOrigenlinea2.origen.diametro,miCirculoOrigenlinea2.origen.diametro);
+        //for (Circulos o : miCirculoOrigenlinea2.listaCirculos) { 
+        //    rotate(o.angulo);
+        //    ellipse(o.posX, o.posY, o.diametro, o.diametro);
+        //    o.angulo+=INCREMENTO_AN;
+        //    // println(o.nom,o.angulo);
+        //}
+        //popMatrix();
+        //popMatrix();
+        
+    
+}
